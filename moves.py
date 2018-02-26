@@ -1,16 +1,22 @@
 
 class Move():
     """
-
+    Autor: Kevin Cardona
+    Fecha: febrero 17 2018
+    Clase encargada de hacer los movientos del raton.
     """
 
     # rigth, left, up, down, cheese, move = bool
 
     def read_matriz(self, matriz, position_mouse_x, position_mouse_y):
         """
-
-        :param matriz:
-        :return:
+        Autor: Kevin Cardona
+        Fecha: febrero 17 2018
+        método que analiza la matriz para saber que hay alrededor del ratón 
+        :param matriz: matriz inicial del juego
+        :param position_mouse_x: posición del ratón en x
+        :param position_mouse_y: posición del ratón en 7
+        :return: la nueva posición en X e Y, y un bool indicando si encontro el queso o No.
         """
         # preguntar derecha
         try:
@@ -63,10 +69,13 @@ class Move():
 
     def step(self, position_x, position_y, **kwargs):
         """
-
-        :param matriz:
-        :param kwargs:
-        :return:
+        Autor: Kevin Cardona
+        Fecha: febrero 17 2018
+        método que tiene las condiciones para hacer un paso.
+        :param position_x: posición en x del ratón
+        :param position_y: posición en y del ratón
+        :param kwargs: kwargs de la función 
+        :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
         """
         left = kwargs['block_left']
         up = kwargs['block_up']
@@ -120,8 +129,12 @@ class Move():
 
     def move_up(self, position_x, position_y):
         """
-
-        :return:
+        Autor: Kevin Cardona
+        Fecha: febrero 17 2018
+        movimiento arriba del ratón
+        :param position_x: posición en x del ratón
+        :param position_y: posición en y del ratón
+        :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
         """
         move_x = position_x - 1
         move_y = position_y
@@ -130,8 +143,12 @@ class Move():
 
     def move_left(self, position_x, position_y,):
         """
-
-        :return:
+        Autor: Kevin Cardona
+        Fecha: febrero 17 2018
+        movimiento a la izquierda del ratón
+        :param position_x: posición en x del ratón
+        :param position_y: posición en y del ratón
+        :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
         """
         move_x = position_x
         move_y = position_y - 1
@@ -140,8 +157,12 @@ class Move():
 
     def move_down(self, position_x, position_y):
         """
-
-        :return:
+        Autor: Kevin Cardona
+        Fecha: febrero 17 2018
+        movimiento abajo del ratón
+        :param position_x: posición en x del ratón
+        :param position_y: posición en y del ratón
+        :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
         """
         move_x = position_x + 1
         move_y = position_y
@@ -150,8 +171,12 @@ class Move():
 
     def move_rigth(self, position_x, position_y):
         """
-
-        :return:
+        Autor: Kevin Cardona
+        Fecha: febrero 17 2018
+        movimiento a la derecha del ratón
+        :param position_x: posición en x del ratón
+        :param position_y: posición en y del ratón
+        :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
         """
         move_x = position_x
         move_y = position_y + 1
@@ -159,9 +184,11 @@ class Move():
 
     def get_field(self, field):
         """
-
-        :param field:
-        :return:
+        Autor: Kevin Cardona
+        Fecha: febrero 17 2018
+        método auxiliar para analizar que hay dentro de cada casilla
+        :param field: casilla de la matriz
+        :return: bool
         """
         if field == 'X':
             field = False
