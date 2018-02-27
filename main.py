@@ -1,6 +1,6 @@
-from constanst import *
 from random import randint
 from moves import Move
+from constanst import *
 
 
 class Labyrinth():
