@@ -3,8 +3,6 @@ import sys
 
 from pygame.locals import *
 
-from artificial_intelligence.utils import read_file
-
 
 class GameWindow():
     """
