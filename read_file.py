@@ -7,9 +7,7 @@ with open('matriz.txt') as matriz:
     world = []
 
     """ Crea la matriz con base a los datos del archivo txt """
-    for line_matriz in matriz:
-        split_line_matriz = line_matriz.strip().split(" ")
-        world.append(split_line_matriz)
+    [world.append(line_matriz.strip().split(" ")) for line_matriz in matriz]
 
 
 

@@ -1,5 +1,5 @@
 
-class Nodo():
+class Nodo(object):
     """
     Autor: carlos Almario
     Fecha: febrero 27 2018
