@@ -1,6 +1,6 @@
-from constanst import *
 from random import randint
 from moves import Move
+from constanst import ROWS_NUMBER, COLUMNS_NUMBER
 
 
 class Labyrinth():
@@ -35,7 +35,11 @@ class Labyrinth():
         método encargado de analizar cada jugada
         """
         move = Move()
-        position_x, position_y, find = move.read_matriz(self.matriz, position_mouse_x=self.position_mouse_x, position_mouse_y=self.position_mouse_y)
+        position_x, position_y, find = move.read_matriz(
+            self.matriz,
+            position_mouse_x=self.position_mouse_x,
+            position_mouse_y=self.position_mouse_y
+        )
 
         return position_x, position_y, find
 
