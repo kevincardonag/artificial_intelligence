@@ -1,7 +1,9 @@
+import pygame
+import sys
 
-import pygame, sys
-import read_file
 from pygame.locals import *
+
+from artificial_intelligence.utils import read_file
 
 
 class GameWindow():

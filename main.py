@@ -1,6 +1,7 @@
 from random import randint
-from moves import Move
+
 from constanst import ROWS_NUMBER, COLUMNS_NUMBER
+from utils.moves import Move
 
 
 class Labyrinth():
