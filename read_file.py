@@ -8,6 +8,3 @@ with open('matriz.txt') as matriz:
 
     """ Crea la matriz con base a los datos del archivo txt """
     [world.append(line_matriz.strip().split(" ")) for line_matriz in matriz]
-
-
-

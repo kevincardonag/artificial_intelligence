@@ -19,8 +19,8 @@ class GameWindow():
         """
         pygame.init()
 
-        self.window = pygame.display.set_mode((500,500))
-        self.background_window = pygame.Color(255,255,255)
+        self.window = pygame.display.set_mode((500, 500))
+        self.background_window = pygame.Color(255, 255, 255)
         pygame.display.set_caption("Mario")
 
         self.block = pygame.image.load("images/bloque.png")
