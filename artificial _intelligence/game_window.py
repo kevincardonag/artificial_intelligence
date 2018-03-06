@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from pygame.locals import *
+from utils import read_file
 
 
 class GameWindow():

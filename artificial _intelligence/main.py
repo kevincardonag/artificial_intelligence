@@ -144,5 +144,6 @@ class Labyrinth():
 
         return random_x, random_y
 
+
 laberyrint = Labyrinth()
 laberyrint.run()
