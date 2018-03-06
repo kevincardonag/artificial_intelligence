@@ -1,7 +1,8 @@
+import pygame
+import sys
 
-import pygame, sys
-import read_file
 from pygame.locals import *
+from utils import read_file
 
 
 class GameWindow():

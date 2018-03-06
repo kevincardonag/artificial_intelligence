@@ -1,6 +1,7 @@
 from random import randint
-from moves import Move
+
 from constanst import ROWS_NUMBER, COLUMNS_NUMBER
+from utils.moves import Move
 
 
 class Labyrinth():
@@ -142,6 +143,7 @@ class Labyrinth():
         random_y = randint(1, max_number_y) - 1
 
         return random_x, random_y
+
 
 laberyrint = Labyrinth()
 laberyrint.run()
