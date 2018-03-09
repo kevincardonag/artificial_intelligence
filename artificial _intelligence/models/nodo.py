@@ -1,5 +1,5 @@
 
-class Nodo(object):
+class Node(object):
     """
     Autor: carlos Almario
     Fecha: febrero 27 2018
@@ -12,10 +12,17 @@ class Nodo(object):
         Fecha: Marzo 6 2018
         Se sobrescribe el init para crear las variables de la clase nodo.
         """
-        self.nodo = self.__class__
+        self.node = self.__class__
         self.position_x = ""
         self.position_y = ""
-        # self.possible_movements = []
+        self.test = ""
+
+    def __str__(self):
+        """
+
+        :return:
+        """
+        return "[{0}-{1}]".format(self.position_x, self.position_y)
 
     def move_up(self, position_x, position_y):
         """
@@ -24,12 +31,12 @@ class Nodo(object):
         movimiento arriba del ratón
         :param position_x: posición en x del ratón
         :param position_y: posición en y del ratón
-        :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
+        :return: moviente, nuevo valor de X e Y
         """
         move_x = position_x - 1
         move_y = position_y
 
-        return move_x, move_y, False
+        return move_x, move_y
 
     def move_left(self, position_x, position_y,):
         """
@@ -38,12 +45,12 @@ class Nodo(object):
         movimiento a la izquierda del ratón
         :param position_x: posición en x del ratón
         :param position_y: posición en y del ratón
-        :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
+        :return: moviente, nuevo valor de X e Y
         """
         move_x = position_x
         move_y = position_y - 1
 
-        return move_x, move_y, False
+        return move_x, move_y
 
     def move_down(self, position_x, position_y):
         """
@@ -52,22 +59,22 @@ class Nodo(object):
         movimiento abajo del ratón
         :param position_x: posición en x del ratón
         :param position_y: posición en y del ratón
-        :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
+        :return: moviente, nuevo valor de X e Y
         """
         move_x = position_x + 1
         move_y = position_y
 
-        return move_x, move_y, False
+        return move_x, move_y
 
-    def move_rigth(self, position_x, position_y):
+    def move_right(self, position_x, position_y):
         """
         Autor: Kevin Cardona
         Fecha: febrero 17 2018
         movimiento a la derecha del ratón
         :param position_x: posición en x del ratón
         :param position_y: posición en y del ratón
-        :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
+        :return: moviente, nuevo valor de X e Y
         """
         move_x = position_x
         move_y = position_y + 1
-        return move_x, move_y, False
+        return move_x, move_y

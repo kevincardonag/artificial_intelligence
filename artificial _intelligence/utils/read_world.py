@@ -1,124 +1,54 @@
-def read_matriz(matriz, position_mario_x, position_mario_y):
+def read_matriz(world, node):
     """
     Autor: Kevin Cardona
     Fecha: febrero 17 2018
-    método que analiza la matriz para saber que hay alrededor del ratón
-    :param matriz: matriz inicial del juego
-    :param position_mario_x: posición del mario en x
-    :param position_mario_y: posición del mario en y
-    :return: la nueva posición en X e Y, y un bool indicando si encontro el queso o No.
+    método que analiza la world para saber que hay alrededor del ratón
+    :param world: world inicial del juego
+    :param nodo: posición del mario en x
+    :return: resumen de los posibles moviemientos que puede hacer mario
     """
-    possible_movements = []
+    position_mario_x = node.position_x
+    position_mario_y = node.position_y
+
+    # preguntar arriba
+    if (position_mario_x - 1) < 0:
+        block_up = False
+    else:
+        block_up = world[position_mario_x - 1][position_mario_y].strip()
+        block_up = get_field(field=block_up)
 
     # preguntar derecha
     try:
-        block_rigth = matriz[position_mario_x][position_mario_y + 1].strip()
-
+        block_right = world[position_mario_x][position_mario_y + 1].strip()
+        block_right = get_field(field=block_right)
     except Exception:
-        block_rigth = False
+        block_right = False
 
     # preguntar izq
-    if (position_mouse_y - 1) < 0:
+    if (position_mario_y - 1) < 0:
         block_left = False
     else:
-        block_left = matriz[position_mouse_x][position_mouse_y - 1].strip()
-
-        if block_left == 'Q':
-            return position_mouse_x, position_mouse_y, True
-
-        block_left = self.get_field(block_left)
-
-    # preguntar arriba
-    if (position_mouse_x - 1) < 0:
-        block_up = False
-    else:
-        block_up = matriz[position_mouse_x - 1][position_mouse_y].strip()
-        if block_up == 'Q':
-            return position_mouse_x, position_mouse_y, True
-        block_up = self.get_field(block_up)
+        block_left = world[position_mario_x][position_mario_y - 1].strip()
+        block_left = get_field(field=block_left)
 
     # preguntar abajo
     try:
-        block_down = matriz[position_mouse_x + 1][position_mouse_y].strip()
-        if block_down == 'Q':
-            return position_mouse_x, position_mouse_y, True
-        block_down = self.get_field(block_down)
-
+        block_down = world[position_mario_x + 1][position_mario_y].strip()
+        block_down = get_field(field=block_down)
     except Exception:
         block_down = False
 
-    fields = {
-        'block_rigth': block_rigth,
-        'block_left': block_left,
+    possible_movements = {
         'block_up': block_up,
+        'block_right': block_right,
+        'block_left': block_left,
         'block_down': block_down
     }
 
-    return step(position_mouse_x, position_mouse_y, **fields)
+    return possible_movements
 
 
-def step(position_x, position_y, **kwargs):
-    """
-    Autor: Kevin Cardona
-    Fecha: febrero 17 2018
-    método que tiene las condiciones para hacer un paso.
-    :param position_x: posición en x del ratón
-    :param position_y: posición en y del ratón
-    :param kwargs: kwargs de la función
-    :return: moviente, nuevo valor de X e Y, Y UN BOOL INDICANDO SI ENCONTRO EL QUESO
-    """
-    left = kwargs['block_left']
-    up = kwargs['block_up']
-    rigth = kwargs['block_rigth']
-    down = kwargs['block_down']
-
-    if left and up and rigth and down:
-        return move_up(position_x, position_y)
-
-    if left and up and rigth and not down:
-        return self.move_up(position_x, position_y)
-
-    if left and up and not rigth and down:
-        return self.move_up(position_x, position_y,)
-
-    if left and up and not rigth and not down:
-        return self.move_left(position_x, position_y,)
-
-    if left and not up and rigth and down:
-        return self.move_left(position_x, position_y,)
-
-    if left and not up and rigth and not down:
-        return self.move_rigth(position_x, position_y,)
-
-    if left and not up and not rigth and down:
-        return self.move_left(position_x, position_y,)
-
-    if left and not up and not rigth and not down:
-        return self.move_left(position_x, position_y,)
-
-    if not left and up and rigth and down:
-        return self.move_up(position_x, position_y,)
-
-    if not left and up and rigth and not down:
-        return self.move_rigth(position_x, position_y,)
-
-    if not left and up and not rigth and down:
-        return self.move_down(position_x, position_y,)
-
-    if not left and up and not rigth and down:
-        return self.move_up(position_x, position_y,)
-
-    if not left and not up and rigth and down:
-        return self.move_rigth(position_x, position_y,)
-
-    if not left and not up and rigth and not down:
-        return self.move_rigth(position_x, position_y,)
-
-    if not left and not up and not rigth and down:
-        return self.move_down(position_x, position_y,)
-
-
-def get_field(self, field):
+def get_field(field):
     """
     Autor: Kevin Cardona
     Fecha: febrero 17 2018

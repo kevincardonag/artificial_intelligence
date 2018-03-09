@@ -1,10 +1,15 @@
 import pygame
 import sys
+import time
 
 from pygame.locals import *
 from utils.read_file import read_file
-from algorithm_types import preferential_by_amplitude
+from algorithm_types import preferential_by_amplitude, build_tree_solution
 from constanst import ALGORITHM_TYPE
+from global_variables import tree_development, build_tree
+from models.nodo import Node
+
+sys.setrecursionlimit(100000)
 
 
 class GameWindow():
@@ -44,7 +49,26 @@ class GameWindow():
         position_x_mario, position_y_mario = self.draw_world(self.world)
 
         if ALGORITHM_TYPE == 1:
-            preferential_by_amplitude(self.world, position_x_mario, position_y_mario)
+
+            self.node = Node()
+            self.node.position_x = position_x_mario
+            self.node.position_y = position_y_mario
+            self.node.node = None
+            self.node.world = self.world
+            tree_development.append(self.node)
+
+            while True:
+                goal, world, node_move = preferential_by_amplitude(self.world, self.node)
+                if not goal:
+                    self.world = world
+                    self.node = node_move
+                else:
+                    print('YOU WIN')
+                    build_tree_solution(node_move)
+                    break
+
+        for step in build_tree:
+            print(step)
 
         while True:
 
@@ -79,5 +103,15 @@ class GameWindow():
                     self.window.blit(self.princses, (j * 50, i * 50))
 
         return position_x_mario, position_y_mario
+
+    def clear_world(self):
+        """
+
+        :return:
+        """
+        self.window.fill((0, 0, 0))
+        self.background_window = pygame.Color(255, 255, 255)
+        self.window.fill(self.background_window)
+
 
 game_window = GameWindow()
