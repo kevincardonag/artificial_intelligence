@@ -9,8 +9,6 @@ from constanst import ALGORITHM_TYPE
 from global_variables import tree_development, build_tree
 from models.nodo import Node
 
-sys.setrecursionlimit(100000)
-
 
 class GameWindow():
     """
@@ -57,18 +55,17 @@ class GameWindow():
             self.node.world = self.world
             tree_development.append(self.node)
 
+            aux = 0
             while True:
                 goal, world, node_move = preferential_by_amplitude(self.world, self.node)
                 if not goal:
                     self.world = world
                     self.node = node_move
+                    aux += 1
                 else:
                     print('YOU WIN')
                     build_tree_solution(node_move)
                     break
-
-        for step in build_tree:
-            print(step)
 
         while True:
 
@@ -106,7 +103,9 @@ class GameWindow():
 
     def clear_world(self):
         """
-
+        Autor: Kevin Cardona
+        Fecha: Marzo 6 2018
+        Método para limpiar los graficos de la pantalla
         :return:
         """
         self.window.fill((0, 0, 0))

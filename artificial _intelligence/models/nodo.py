@@ -15,11 +15,13 @@ class Node(object):
         self.node = self.__class__
         self.position_x = ""
         self.position_y = ""
-        self.test = ""
+        self.possible_movements = ""
 
     def __str__(self):
         """
-
+        Autor: Kevin Cardona
+        Fecha: 10 de marzo 2018
+        Método para la representación de la clase nodo
         :return:
         """
         return "[{0}-{1}]".format(self.position_x, self.position_y)

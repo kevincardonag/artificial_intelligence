@@ -17,7 +17,7 @@ def preferential_by_amplitude(world, node):
 
     possible_movements = read_matriz(world, node)
 
-    father_node.test = possible_movements
+    father_node.possible_movements = possible_movements
 
     if possible_movements.get('block_up'):
         # se crea el nodo hijo
