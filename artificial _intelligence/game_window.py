@@ -8,6 +8,7 @@ from algorithm_types import preferential_by_amplitude, build_tree_solution
 from constanst import ALGORITHM_TYPE
 from global_variables import tree_development, build_tree
 from models.nodo import Node
+from utils.read_world import search_mario
 
 
 class GameWindow():
@@ -25,6 +26,9 @@ class GameWindow():
         """
         pygame.init()
 
+        pygame.font.init()  # you have to call this at the start,
+        self.my_font = pygame.font.SysFont('Comic Sans MS', 40)
+
         self.window = pygame.display.set_mode((500, 500))
         self.background_window = pygame.Color(255, 255, 255)
         pygame.display.set_caption("Mario")
@@ -33,6 +37,9 @@ class GameWindow():
         self.tortle = pygame.image.load("images/tortle.png")
         self.mario = pygame.image.load("images/mario.png")
         self.princses = pygame.image.load("images/princesa.png")
+        self.mario_and_tortle = pygame.image.load("images/mario_and_tortle.png")
+        self.mario_and_princes = pygame.image.load("images/mario_and_princes.png")
+        self.block_white = pygame.image.load("images/bloque_blanco.png")
 
         self.world = read_file()
         self.run()
@@ -44,7 +51,7 @@ class GameWindow():
         Método para correr la ventana del juego y escuchar los eventos que suceden en ella.
         """
         self.window.fill(self.background_window)
-        position_x_mario, position_y_mario = self.draw_world(self.world)
+        position_x_mario, position_y_mario = search_mario(self.world)
 
         if ALGORITHM_TYPE == 1:
 
@@ -53,19 +60,20 @@ class GameWindow():
             self.node.position_y = position_y_mario
             self.node.node = None
             self.node.world = self.world
+            self.node.depth = 0
             tree_development.append(self.node)
 
-            aux = 0
             while True:
-                goal, world, node_move = preferential_by_amplitude(self.world, self.node)
+                goal, node_move = preferential_by_amplitude(self.world, self.node)
                 if not goal:
-                    self.world = world
                     self.node = node_move
-                    aux += 1
                 else:
                     print('YOU WIN')
                     build_tree_solution(node_move)
                     break
+
+        # contador para recorrer la lista de la solución.
+        count = 0
 
         while True:
 
@@ -76,41 +84,35 @@ class GameWindow():
 
             pygame.display.update()
 
-    def draw_world(self, world):
-        """
-        Autor: Kevin Cardona
-        Fecha: Marzo 6 2018
-        Método para dibujar el mundo, consta de un doble for para dibujar las posiciones en x y posiciones en y
-        """
-        position_x_mario, position_y_mario = '', ''
+            if count < len(build_tree):
+                current_node = build_tree[count]
+                self.window.blit(self.mario, (current_node.position_y * 50, current_node.position_x * 50))
+                count += 1
+                time.sleep(1)
+            else:
+                text_winner = self.my_font.render('Ganaste', False, (231, 37, 18))
+                self.window.blit(text_winner, (100, 100))
+                text_depth = "Profundidad del arbol {0}".format(current_node.depth)
+                text_render = self.my_font.render(text_depth, False, (231, 37, 18))
+                self.window.blit(text_render, (100, 160))
 
-        for i in range(len(world)):
-            for j in range(len(world)):
-                if world[i][j] == '1':
-                    self.window.blit(self.block, (j * 50, i * 50))
+            for i in range(len(self.world)):
+                for j in range(len(self.world)):
 
-                if world[i][j] == '4':
-                    self.window.blit(self.tortle, (j * 50, i * 50))
+                    if self.world[i][j] == '1':
+                        self.window.blit(self.block, (j * 50, i * 50))
 
-                if world[i][j] == '2':
-                    position_x_mario, position_y_mario = i, j
-                    self.window.blit(self.mario, (j * 58, i * 53))
+                    if self.world[i][j] == '4':
+                        self.window.blit(self.tortle, (j * 50, i * 50))
 
-                if world[i][j] == '5':
-                    self.window.blit(self.princses, (j * 50, i * 50))
+                    if self.world[i][j] == '5':
+                        self.window.blit(self.princses, (j * 50, i * 50))
 
-        return position_x_mario, position_y_mario
+                    if self.world[i][j] == '4' and i == current_node.position_x and j == current_node.position_y:
+                        self.window.blit(self.mario_and_tortle, (j * 50, i * 50))
 
-    def clear_world(self):
-        """
-        Autor: Kevin Cardona
-        Fecha: Marzo 6 2018
-        Método para limpiar los graficos de la pantalla
-        :return:
-        """
-        self.window.fill((0, 0, 0))
-        self.background_window = pygame.Color(255, 255, 255)
-        self.window.fill(self.background_window)
+                    if self.world[i][j] == '5' and i == current_node.position_x and j == current_node.position_y:
+                        self.window.blit(self.mario_and_princes, (j * 50, i * 50))
 
 
 game_window = GameWindow()

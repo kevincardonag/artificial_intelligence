@@ -16,6 +16,7 @@ class Node(object):
         self.position_x = ""
         self.position_y = ""
         self.possible_movements = ""
+        self.depth = ""
 
     def __str__(self):
         """

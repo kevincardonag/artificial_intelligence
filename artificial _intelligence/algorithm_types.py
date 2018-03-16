@@ -13,7 +13,7 @@ def preferential_by_amplitude(world, node):
     father_node = node
     is_goal = check_goal(world, node)
     if is_goal:
-        return is_goal, world, node
+        return is_goal, node
 
     possible_movements = read_matriz(world, node)
 
@@ -79,8 +79,8 @@ def preferential_by_amplitude(world, node):
     del tree_development[0]
 
     next_node = tree_development[0]
-
-    return is_goal, world, next_node
+    next_node.depth = father_node.depth + 1
+    return is_goal, next_node
 
 
 def check_goal(world, node):
