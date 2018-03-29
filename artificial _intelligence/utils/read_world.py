@@ -12,7 +12,7 @@ def read_matriz(world, node):
 
     # preguntar arriba
     if (position_mario_x - 1) < 0:
-        block_up = False
+        block_up = {'move':False,'cost':0}
     else:
         block_up = world[position_mario_x - 1][position_mario_y].strip()
         block_up = get_field(field=block_up)
@@ -20,13 +20,14 @@ def read_matriz(world, node):
     # preguntar derecha
     try:
         block_right = world[position_mario_x][position_mario_y + 1].strip()
+
         block_right = get_field(field=block_right)
     except Exception:
-        block_right = False
+        block_right = {'move':False,'cost':0}
 
     # preguntar izq
     if (position_mario_y - 1) < 0:
-        block_left = False
+        block_left = {'move':False,'cost':0}
     else:
         block_left = world[position_mario_x][position_mario_y - 1].strip()
         block_left = get_field(field=block_left)
@@ -34,9 +35,10 @@ def read_matriz(world, node):
     # preguntar abajo
     try:
         block_down = world[position_mario_x + 1][position_mario_y].strip()
+
         block_down = get_field(field=block_down)
     except Exception:
-        block_down = False
+        block_down = {'move':False,'cost':0}
 
     possible_movements = {
         'block_up': block_up,
@@ -44,6 +46,8 @@ def read_matriz(world, node):
         'block_left': block_left,
         'block_down': block_down
     }
+
+
 
     return possible_movements
 
@@ -57,12 +61,21 @@ def get_field(field):
     :return: bool
     """
     if field == '1':
-        field = False
+        field = {'move':False,'cost': 0}
     elif field == '0':
-        field = True
+        field = {'move': True, 'cost': 1}
     elif field == '3':
-        field = True
+        field = {'move': True, 'cost': 1}
     elif field == '4':
-        field = True
+        field = {'move': True, 'cost': 10}
+
+    elif field == '2':
+        field = {'move': True, 'cost': 1}
+
+    elif field == '5':
+        field = {'move': True, 'cost': 1}
 
     return field
+
+
+
