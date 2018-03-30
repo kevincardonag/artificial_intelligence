@@ -1,3 +1,6 @@
+from global_variables import tree_development, build_tree
+
+
 def read_matriz(world, node):
     """
     Autor: Kevin Cardona
@@ -80,3 +83,33 @@ def search_mario(world):
         for position_y in range(len(world)):
             if world[position_x][position_y] == '2':
                 return position_x, position_y
+
+
+def check_goal(world, node):
+    """
+    Autor: Kevin Cardona
+    Fecha: Marzo 6 2018
+    Método que comprueba si el nodo es meta
+    :param world: matriz que reprenta el mundo de mario
+    :param node: nodo (posición de mario)
+    :return: bool
+    """
+    field = world[node.position_x][node.position_y]
+    return field == '5'
+
+
+def build_tree_solution(node):
+    """
+    Autor: Kevin Cardona
+    Fecha: Marzo 8 2018
+    :return: retorna un array con la solución del arbol.
+    """
+    node_solution = node
+    build_tree.insert(0, node_solution)
+
+    while True:
+        if node_solution.node:
+            node_solution = node_solution.node
+            build_tree.insert(0, node_solution)
+        else:
+            break

@@ -4,11 +4,12 @@ import time
 
 from pygame.locals import *
 from utils.read_file import read_file
-from algorithm_types import preferential_by_amplitude, build_tree_solution
+from preferential_by_amplitude import preferential_by_amplitude
 from constanst import ALGORITHM_TYPE
 from global_variables import tree_development, build_tree
 from models.nodo import Node
-from utils.read_world import search_mario
+from utils.read_world import search_mario, build_tree_solution
+from avara import algorithm_avara
 
 
 class GameWindow():
@@ -53,14 +54,14 @@ class GameWindow():
         self.window.fill(self.background_window)
         position_x_mario, position_y_mario = search_mario(self.world)
 
-        if ALGORITHM_TYPE == 1:
+        self.node = Node()
+        self.node.position_x = position_x_mario
+        self.node.position_y = position_y_mario
+        self.node.node = None
+        self.node.world = self.world
+        self.node.depth = 0
 
-            self.node = Node()
-            self.node.position_x = position_x_mario
-            self.node.position_y = position_y_mario
-            self.node.node = None
-            self.node.world = self.world
-            self.node.depth = 0
+        if ALGORITHM_TYPE == 1:
             tree_development.append(self.node)
 
             while True:
@@ -68,10 +69,18 @@ class GameWindow():
                 if not goal:
                     self.node = node_move
                 else:
-                    print('YOU WIN')
                     build_tree_solution(node_move)
                     break
 
+        if ALGORITHM_TYPE == 2:
+
+            while True:
+                goal, node_move = algorithm_avara(self.world, self.node)
+                if not goal:
+                    self.node = node_move
+                else:
+                    build_tree_solution(node_move)
+                    break
         # contador para recorrer la lista de la solución.
         count = 0
 
