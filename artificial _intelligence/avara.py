@@ -22,7 +22,7 @@ def algorithm_avara(world, node):
 
     father_node.possible_movements = possible_movements
 
-    if possible_movements.get('block_up'):
+    if possible_movements.get('block_up').get('move'):
         # se crea el nodo hijo
         son_node = Node()
 
@@ -39,7 +39,7 @@ def algorithm_avara(world, node):
         son_node.heuristic = heuristic
         tree_development.append(son_node)
 
-    if possible_movements.get('block_right'):
+    if possible_movements.get('block_right').get('move'):
         # se crea el nodo hijo
         son_node = Node()
 
@@ -56,7 +56,7 @@ def algorithm_avara(world, node):
         son_node.heuristic = heuristic
         tree_development.append(son_node)
 
-    if possible_movements.get('block_left'):
+    if possible_movements.get('block_left').get('move'):
         # se crea el nodo hijo
         son_node = Node()
 
@@ -73,7 +73,7 @@ def algorithm_avara(world, node):
         son_node.heuristic = heuristic
         tree_development.append(son_node)
 
-    if possible_movements.get('block_down'):
+    if possible_movements.get('block_down').get('move'):
         # se crea el nodo hijo
         son_node = Node()
 

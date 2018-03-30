@@ -1,6 +1,7 @@
 from models.nodo import Node
 from global_variables import tree_development, build_tree
 from utils.read_world import read_matriz, check_goal
+from global_variables import tree_development, build_tree
 
 
 def preferential_by_amplitude(world, node):
@@ -19,7 +20,7 @@ def preferential_by_amplitude(world, node):
 
     father_node.possible_movements = possible_movements
 
-    if possible_movements.get('block_up'):
+    if possible_movements.get('block_up').get('move'):
         # se crea el nodo hijo
         son_node = Node()
 
@@ -33,7 +34,7 @@ def preferential_by_amplitude(world, node):
 
         tree_development.append(son_node)
 
-    if possible_movements.get('block_right'):
+    if possible_movements.get('block_right').get('move'):
         # se crea el nodo hijo
         son_node = Node()
 
@@ -47,7 +48,7 @@ def preferential_by_amplitude(world, node):
 
         tree_development.append(son_node)
 
-    if possible_movements.get('block_left'):
+    if possible_movements.get('block_left').get('move'):
         # se crea el nodo hijo
         son_node = Node()
 
@@ -61,7 +62,7 @@ def preferential_by_amplitude(world, node):
 
         tree_development.append(son_node)
 
-    if possible_movements.get('block_down'):
+    if possible_movements.get('block_down').get('move'):
         # se crea el nodo hijo
         son_node = Node()
 
