@@ -1,7 +1,7 @@
 from utils.read_world import check_goal, read_matriz
-import numpy as np
+#import numpy as np
 from models.nodo import Node
-from global_variables import tree_development, build_tree
+from global_variables import tree_development, build_tree, nodes_visited
 
 
 def algorithm_avara(world, node):
@@ -21,6 +21,7 @@ def algorithm_avara(world, node):
     possible_movements = read_matriz(world, father_node)
 
     father_node.possible_movements = possible_movements
+    nodes_visited.append(father_node)
 
     if possible_movements.get('block_up').get('move'):
         # se crea el nodo hijo
@@ -37,7 +38,8 @@ def algorithm_avara(world, node):
         # se agrega el valor de la heuristica al Nodo
         heuristic = calculate_heuristic(son_node)
         son_node.heuristic = heuristic
-        tree_development.append(son_node)
+        if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+            tree_development.append(son_node)
 
     if possible_movements.get('block_right').get('move'):
         # se crea el nodo hijo
@@ -54,7 +56,8 @@ def algorithm_avara(world, node):
         # se agrega el valor de la heuristica al Nodo
         heuristic = calculate_heuristic(son_node)
         son_node.heuristic = heuristic
-        tree_development.append(son_node)
+        if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+            tree_development.append(son_node)
 
     if possible_movements.get('block_left').get('move'):
         # se crea el nodo hijo
@@ -71,7 +74,8 @@ def algorithm_avara(world, node):
         # se agrega el valor de la heuristica al Nodo
         heuristic = calculate_heuristic(son_node)
         son_node.heuristic = heuristic
-        tree_development.append(son_node)
+        if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+            tree_development.append(son_node)
 
     if possible_movements.get('block_down').get('move'):
         # se crea el nodo hijo
@@ -88,7 +92,8 @@ def algorithm_avara(world, node):
         # se agrega el valor de la heuristica al Nodo
         heuristic = calculate_heuristic(son_node)
         son_node.heuristic = heuristic
-        tree_development.append(son_node)
+        if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+            tree_development.append(son_node)
 
     organized = sorted(tree_development, key=lambda node: node.heuristic)
     next_node = organized[0]
@@ -109,6 +114,6 @@ def calculate_heuristic(son_node):
     """
     position_x = son_node.position_x - 4
     position_y = son_node.position_y - 9
-    difference = np.array([position_x, position_y])
-    heuristic = np.linalg.norm(difference)
+    heuristic = abs(position_x + position_y)
+    # heuristic = np.linalg.norm(difference)
     return heuristic

@@ -60,54 +60,12 @@ class GameWindow():
         Fecha: Mayo 3 2018
         Método para correr la ventana del juego y escuchar los eventos que suceden en ella.
         """
-        self.window.fill(self.background_window)
-        position_x_mario, position_y_mario = search_mario(self.world)
 
-        self.node = Node()
-        self.node.position_x = position_x_mario
-        self.node.position_y = position_y_mario
-        self.node.node = None
-        self.node.world = self.world
-        self.node.depth = 0
 
-        # algoritmo preferente por amplitud
-        if ALGORITHM_TYPE == 1:
-            tree_development.append(self.node)
-
-            while True:
-                goal, node_move = preferential_by_amplitude(self.world, self.node)
-                if not goal:
-                    self.node = node_move
-                else:
-                    build_tree, cost = build_tree_solution(node_move)
-                    break
-
-        # algoritmo por costo uniforme
-        if ALGORITHM_TYPE == 2:
-            tree_development.append(self.node)
-
-            while True:
-                goal, world, node_move = uniform_cost(self.world, self.node)
-                if not goal:
-                    self.world = world
-                    self.node = node_move
-                else:
-                    build_tree, cost = build_tree_solution(node_move)
-                    break
-
-        # algoritmo avara
-        if ALGORITHM_TYPE == 4:
-
-            while True:
-                goal, node_move = algorithm_avara(self.world, self.node)
-                if not goal:
-                    self.node = node_move
-                else:
-                    build_tree, cost = build_tree_solution(node_move)
-                    break
 
         # contador para recorrer la lista de la solución.
         count = 0
+        type = 0
 
         while True:
 
@@ -115,6 +73,9 @@ class GameWindow():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == KEYDOWN:
+                    type = 1
+                    build_tree, cost = self.execute_algorithm(type)
 
             pygame.display.update()
 
@@ -130,10 +91,69 @@ class GameWindow():
                     if self.world[i][j] == '5':
                         self.window.blit(self.princses, (j * 50, i * 50))
 
-            if count < len(build_tree):
-                self.window.blit(self.mario, (build_tree[count].position_y * 50,  build_tree[count].position_x * 50))
-                count += 1
-                time.sleep(0.5)
+                    if type != 1 or type != 2 or type != 3 or type != 4 or type != 5:
+                        if self.world[i][j] == '2':
+                            self.window.blit(self.mario, (j * 50, i * 50))
+
+            if type == 1 or type == 2 or type == 3 or type == 4 or type == 5:
+                if count < len(build_tree):
+                    self.window.blit(self.mario, (build_tree[count].position_y * 50,  build_tree[count].position_x * 50))
+                    count += 1
+                    time.sleep(0.5)
+
+
+
+    def execute_algorithm(self, type):
+        position_x_mario, position_y_mario = search_mario(self.world)
+
+        self.node = Node()
+        self.node.position_x = position_x_mario
+        self.node.position_y = position_y_mario
+        self.node.node = None
+        self.node.world = self.world
+        self.node.depth = 0
+
+        # algoritmo preferente por amplitud
+        if type == 1:
+            tree_development.append(self.node)
+
+            while True:
+                goal, node_move = preferential_by_amplitude(self.world, self.node)
+                if not goal:
+                    self.node = node_move
+                else:
+                    build_tree, cost = build_tree_solution(node_move)
+                    break
+
+            return build_tree, cost
+
+        # algoritmo por costo uniforme
+        if type == 2:
+            tree_development.append(self.node)
+
+            while True:
+                goal, world, node_move = uniform_cost(self.world, self.node)
+                if not goal:
+                    self.world = world
+                    self.node = node_move
+                else:
+                    build_tree, cost = build_tree_solution(node_move)
+                    break
+
+            return build_tree, cost
+
+        # algoritmo avara
+        if type == 4:
+
+            while True:
+                goal, node_move = algorithm_avara(self.world, self.node)
+                if not goal:
+                    self.node = node_move
+                else:
+                    build_tree, cost = build_tree_solution(node_move)
+                    break
+
+            return build_tree, cost
 
     def create_text(self, text, a, b, c):
         """
