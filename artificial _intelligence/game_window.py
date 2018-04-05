@@ -89,10 +89,8 @@ class GameWindow():
             tree_development.append(self.node)
 
             while True:
-                goal, world, node_move = uniform_cost(self.world, self.node)
+                goal, node_move = uniform_cost(self.world, self.node)
                 if not goal:
-                    print(node_move)
-                    self.world = world
                     self.node = node_move
                 else:
                     build_tree, cost = build_tree_solution(node_move)
