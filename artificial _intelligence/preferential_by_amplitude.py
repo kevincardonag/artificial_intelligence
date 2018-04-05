@@ -32,6 +32,16 @@ def preferential_by_amplitude(world, node):
         son_node.position_x = x
         son_node.position_y = y
 
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_up').get('flower'):
+            son_node.flower = True
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = 1
+        else:
+            son_node.cost = possible_movements.get('block_up').get('cost')
+
         tree_development.append(son_node)
 
     if possible_movements.get('block_right').get('move'):
@@ -45,6 +55,16 @@ def preferential_by_amplitude(world, node):
         x, y = father_node.move_right(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
+
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_right').get('flower'):
+            son_node.flower = True
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = 1
+        else:
+            son_node.cost = possible_movements.get('block_right').get('cost')
 
         tree_development.append(son_node)
 
@@ -60,6 +80,16 @@ def preferential_by_amplitude(world, node):
         son_node.position_x = x
         son_node.position_y = y
 
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_left').get('flower'):
+            son_node.flower = True
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = 1
+        else:
+            son_node.cost = possible_movements.get('block_left').get('cost')
+
         tree_development.append(son_node)
 
     if possible_movements.get('block_down').get('move'):
@@ -73,6 +103,16 @@ def preferential_by_amplitude(world, node):
         x, y = father_node.move_down(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
+
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_down').get('flower'):
+            son_node.flower = True
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = 1
+        else:
+            son_node.cost = possible_movements.get('block_down').get('cost')
 
         tree_development.append(son_node)
 

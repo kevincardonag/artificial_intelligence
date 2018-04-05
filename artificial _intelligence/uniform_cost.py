@@ -31,10 +31,20 @@ def uniform_cost(world, node):
         x, y = father_node.move_down(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
-        son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
 
         # pregunta si el nodo que se expandio ya fue expandido
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+
+            # si el nodo esta parado es una flor.
+            if possible_movements.get('block_down').get('flower'):
+                son_node.flower = True
+
+            if father_node.flower:
+                son_node.flower = True
+                son_node.cost = father_node.cost + 1
+            else:
+                son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
+
             tree_development.append(son_node)
 
     if possible_movements.get('block_up').get('move'):
@@ -49,10 +59,19 @@ def uniform_cost(world, node):
         son_node.position_x = x
         son_node.position_y = y
 
-        son_node.cost = father_node.cost + possible_movements.get('block_up').get('cost')
-
         # pregunta si el nodo que se expandio ya fue expandido
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+
+            # si el nodo esta parado es una flor.
+            if possible_movements.get('block_up').get('flower'):
+                son_node.flower = True
+
+            if father_node.flower:
+                son_node.flower = True
+                son_node.cost = father_node.cost + 1
+            else:
+                son_node.cost = father_node.cost + possible_movements.get('block_up').get('cost')
+
             tree_development.append(son_node)
 
     if possible_movements.get('block_right').get('move'):
@@ -67,10 +86,19 @@ def uniform_cost(world, node):
         son_node.position_x = x
         son_node.position_y = y
 
-        son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
-
         # pregunta si el nodo que se expandio ya fue expandido
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+
+            # si el nodo esta parado es una flor.
+            if possible_movements.get('block_right').get('flower'):
+                son_node.flower = True
+
+            if father_node.flower:
+                son_node.flower = True
+                son_node.cost = father_node.cost + 1
+            else:
+                son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
+
             tree_development.append(son_node)
 
     if possible_movements.get('block_left').get('move'):
@@ -85,10 +113,19 @@ def uniform_cost(world, node):
         son_node.position_x = x
         son_node.position_y = y
 
-        son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
-
         # pregunta si el nodo que se expandio ya fue expandido
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+
+            # si el nodo esta parado es una flor.
+            if possible_movements.get('block_left').get('flower'):
+                son_node.flower = True
+
+            if father_node.flower:
+                son_node.flower = True
+                son_node.cost = father_node.cost + 1
+            else:
+                son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
+
             tree_development.append(son_node)
 
     # ordena la lista de los nodos meta por el costo menor y elimina el nodo que se va a expandir
