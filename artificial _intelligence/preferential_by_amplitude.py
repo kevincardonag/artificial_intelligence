@@ -38,9 +38,9 @@ def preferential_by_amplitude(world, node):
 
         if father_node.flower:
             son_node.flower = True
-            son_node.cost = 1
+            son_node.cost = father_node.cost + 1
         else:
-            son_node.cost = possible_movements.get('block_up').get('cost')
+            son_node.cost = father_node.cost + possible_movements.get('block_up').get('cost')
 
         tree_development.append(son_node)
 
@@ -62,9 +62,9 @@ def preferential_by_amplitude(world, node):
 
         if father_node.flower:
             son_node.flower = True
-            son_node.cost = 1
+            son_node.cost = father_node.cost + 1
         else:
-            son_node.cost = possible_movements.get('block_right').get('cost')
+            son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
 
         tree_development.append(son_node)
 
@@ -86,9 +86,9 @@ def preferential_by_amplitude(world, node):
 
         if father_node.flower:
             son_node.flower = True
-            son_node.cost = 1
+            son_node.cost = father_node.cost + 1
         else:
-            son_node.cost = possible_movements.get('block_left').get('cost')
+            son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
 
         tree_development.append(son_node)
 
@@ -110,9 +110,9 @@ def preferential_by_amplitude(world, node):
 
         if father_node.flower:
             son_node.flower = True
-            son_node.cost = 1
+            son_node.cost = father_node.cost + 1
         else:
-            son_node.cost = possible_movements.get('block_down').get('cost')
+            son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
 
         tree_development.append(son_node)
 

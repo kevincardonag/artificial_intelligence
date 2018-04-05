@@ -6,4 +6,4 @@ HIGH = 500
 
 # Esta variable es provicional, esto indicaria que el usuario eligio la opcion 1 correspondiente al algoritmo por
 # amplitud
-ALGORITHM_TYPE = 2
+ALGORITHM_TYPE = 1
