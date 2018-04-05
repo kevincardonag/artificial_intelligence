@@ -19,7 +19,7 @@ class Node(object):
         self.depth = ""
         self.heuristic = ""
         self.cost = 0
-
+        self.flower = False
 
     def __str__(self):
         """
