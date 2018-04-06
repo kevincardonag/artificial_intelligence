@@ -39,7 +39,17 @@ def algorithm_avara(world, node):
         heuristic = calculate_heuristic(son_node)
 
         son_node.heuristic = heuristic
+
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+            # si el nodo esta parado es una flor.
+            if possible_movements.get('block_up').get('flower'):
+                son_node.flower = True
+
+            if father_node.flower:
+                son_node.flower = True
+                son_node.cost = father_node.cost + 1
+            else:
+                son_node.cost = father_node.cost + possible_movements.get('block_up').get('cost')
             tree_development.append(son_node)
 
     if possible_movements.get('block_right').get('move'):
@@ -58,6 +68,16 @@ def algorithm_avara(world, node):
         heuristic = calculate_heuristic(son_node)
         son_node.heuristic = heuristic
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+            # si el nodo esta parado es una flor.
+            if possible_movements.get('block_right').get('flower'):
+                son_node.flower = True
+
+            if father_node.flower:
+                son_node.flower = True
+                son_node.cost = father_node.cost + 1
+            else:
+                son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
+
             tree_development.append(son_node)
 
     if possible_movements.get('block_left').get('move'):
@@ -75,7 +95,18 @@ def algorithm_avara(world, node):
         # se agrega el valor de la heuristica al Nodo
         heuristic = calculate_heuristic(son_node)
         son_node.heuristic = heuristic
+
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+            # si el nodo esta parado es una flor.
+            if possible_movements.get('block_left').get('flower'):
+                son_node.flower = True
+
+            if father_node.flower:
+                son_node.flower = True
+                son_node.cost = father_node.cost + 1
+            else:
+                son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
+
             tree_development.append(son_node)
 
     if possible_movements.get('block_down').get('move'):
@@ -94,6 +125,16 @@ def algorithm_avara(world, node):
         heuristic = calculate_heuristic(son_node)
         son_node.heuristic = heuristic
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+            # si el nodo esta parado es una flor.
+            if possible_movements.get('block_down').get('flower'):
+                son_node.flower = True
+
+            if father_node.flower:
+                son_node.flower = True
+                son_node.cost = father_node.cost + 1
+            else:
+                son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
+
             tree_development.append(son_node)
 
     organized = sorted(tree_development, key=lambda node: node.heuristic)
