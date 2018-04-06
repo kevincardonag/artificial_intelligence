@@ -1,4 +1,4 @@
-from global_variables import tree_development, build_tree
+from global_variables import tree_development, build_tree, nodes_visited
 
 
 def read_matriz(world, node):
@@ -15,7 +15,7 @@ def read_matriz(world, node):
 
     # preguntar arriba
     if (position_mario_x - 1) < 0:
-        block_up = {'move':False,'cost':0}
+        block_up = {'move':False,'cost':0, 'flower':False}
     else:
         block_up = world[position_mario_x - 1][position_mario_y].strip()
         block_up = get_field(field=block_up)
@@ -25,11 +25,11 @@ def read_matriz(world, node):
         block_right = world[position_mario_x][position_mario_y + 1].strip()
         block_right = get_field(field=block_right)
     except Exception:
-        block_right = {'move':False,'cost':0}
+        block_right = {'move':False,'cost':0, 'flower':False}
 
     # preguntar izq
     if (position_mario_y - 1) < 0:
-        block_left = {'move':False,'cost':0}
+        block_left = {'move':False,'cost':0, 'flower':False}
     else:
         block_left = world[position_mario_x][position_mario_y - 1].strip()
         block_left = get_field(field=block_left)
@@ -40,7 +40,7 @@ def read_matriz(world, node):
 
         block_down = get_field(field=block_down)
     except Exception:
-        block_down = {'move':False,'cost':0}
+        block_down = {'move':False,'cost':0, 'flower':False}
 
     possible_movements = {
         'block_up': block_up,
@@ -61,19 +61,19 @@ def get_field(field):
     :return: bool
     """
     if field == '1':
-        field = {'move':False,'cost': 0}
+        field = {'move':False,'cost': 0, 'flower':False}
     elif field == '0':
-        field = {'move': True, 'cost': 1}
+        field = {'move': True, 'cost': 1, 'flower':False}
     elif field == '3':
-        field = {'move': True, 'cost': 1}
+        field = {'move': True, 'cost': 1, 'flower':True}
     elif field == '4':
-        field = {'move': True, 'cost': 10}
+        field = {'move': True, 'cost': 7, 'flower':False}
 
     elif field == '2':
-        field = {'move': True, 'cost': 1}
+        field = {'move': True, 'cost': 1, 'flower':False}
 
     elif field == '5':
-        field = {'move': True, 'cost': 1}
+        field = {'move': True, 'cost': 1, 'flower':False}
 
     return field
 
@@ -111,6 +111,10 @@ def build_tree_solution(node):
     Fecha: Marzo 8 2018
     :return: retorna un array con la solución del arbol.
     """
+    build_tree.clear()
+    tree_development.clear()
+    nodes_visited.clear()
+
     node_solution = node
     build_tree.insert(0, node_solution)
     cost = 0
@@ -120,6 +124,7 @@ def build_tree_solution(node):
             node_solution = node_solution.node
             cost += node_solution.cost
             build_tree.insert(0, node_solution)
+            # print("["+str(node_solution.position_x)+","+str(node_solution.position_y)+"]")
         else:
             break
 

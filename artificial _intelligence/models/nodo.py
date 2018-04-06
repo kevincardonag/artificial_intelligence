@@ -17,9 +17,10 @@ class Node(object):
         self.position_y = ""
         self.possible_movements = ""
         self.depth = ""
-        self.heuristic = ""
+        self.heuristic = 0
         self.cost = 0
-
+        self.f = 0
+        self.state = False
 
     def __str__(self):
         """
