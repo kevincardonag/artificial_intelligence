@@ -20,7 +20,7 @@ class Node(object):
         self.heuristic = 0
         self.cost = 0
         self.f = 0
-        self.state = False
+        self.flower = False
 
     def __str__(self):
         """

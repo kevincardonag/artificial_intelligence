@@ -3,3 +3,5 @@ COLUMNS_NUMBER = 5
 
 WIDTH = 700
 HIGH = 500
+
+

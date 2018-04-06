@@ -15,7 +15,9 @@ def read_matriz(world, node):
 
     # preguntar arriba
     if (position_mario_x - 1) < 0:
-        block_up = {'move':False,'cost':0, 'flower':False}
+
+        block_up = {'move': False, 'cost': 0}
+
     else:
         block_up = world[position_mario_x - 1][position_mario_y].strip()
         block_up = get_field(field=block_up)
@@ -61,19 +63,18 @@ def get_field(field):
     :return: bool
     """
     if field == '1':
-        field = {'move':False,'cost': 0, 'flower':False}
+
+        field = {'move': False, 'cost': 0, 'flower': False}
     elif field == '0':
-        field = {'move': True, 'cost': 1, 'flower':False}
+        field = {'move': True, 'cost': 1, 'flower': False}
     elif field == '3':
-        field = {'move': True, 'cost': 1, 'flower':True}
+        field = {'move': True, 'cost': 1, 'flower': True}
     elif field == '4':
-        field = {'move': True, 'cost': 7, 'flower':False}
-
+        field = {'move': True, 'cost': 8, 'flower': False}
     elif field == '2':
-        field = {'move': True, 'cost': 1, 'flower':False}
-
+        field = {'move': True, 'cost': 1, 'flower': False}
     elif field == '5':
-        field = {'move': True, 'cost': 1, 'flower':False}
+        field = {'move': True, 'cost': 1, 'flower': False}
 
     return field
 
@@ -117,15 +118,13 @@ def build_tree_solution(node):
 
     node_solution = node
     build_tree.insert(0, node_solution)
-    cost = 0
 
     while True:
         if node_solution.node:
             node_solution = node_solution.node
-            cost += node_solution.cost
             build_tree.insert(0, node_solution)
             # print("["+str(node_solution.position_x)+","+str(node_solution.position_y)+"]")
         else:
             break
 
-    return build_tree, cost
+    return build_tree, node.cost
