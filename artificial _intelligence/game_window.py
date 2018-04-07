@@ -321,7 +321,7 @@ class GameWindow():
         pygame.draw.rect(self.window, self.background_rect,
                          (len(read_file()) * 50, 0, WIDTH - len(read_file()) * 50, HIGH))
         pygame.draw.rect(self.window, self.background_rect_two,
-                         ((len(read_file()) * 50) + 10, HIGH - 215, WIDTH - len(read_file()) * 50 - 10, 200))
+                         ((len(read_file()) * 50) + 6, HIGH - 215, WIDTH - len(read_file()) * 50 - 10, 200))
 
         # muestra la palabra Algorimos en la parte derecha de la pantalla
         self.window.blit(self.texto, ((len(read_file()) * 50) + 25, 20))
