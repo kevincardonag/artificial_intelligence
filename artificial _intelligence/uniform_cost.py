@@ -133,6 +133,7 @@ def uniform_cost(world, node):
     tree_development.sort(key=lambda node: node.cost)
     del tree_development[0]
     next_node = tree_development[0]
+    next_node.depth = father_node.depth + 1
 
     return is_goal, next_node
 

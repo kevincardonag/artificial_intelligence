@@ -127,4 +127,4 @@ def build_tree_solution(node):
         else:
             break
 
-    return build_tree, node.cost
+    return build_tree, node.cost,
