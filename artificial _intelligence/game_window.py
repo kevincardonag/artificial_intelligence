@@ -139,8 +139,9 @@ class GameWindow():
                 else:
                     type = 0
                     count = 0
+                    if caught_flower:
+                        self.world[pos_caught_x][pos_caught_y] = '3'
                     caught_flower = False
-                    self.world[pos_caught_x][pos_caught_y] = '3'
                     self.node.princes = True
 
             # cliclo For que está escuchando los eventos del teclado
@@ -187,7 +188,6 @@ class GameWindow():
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-
 
     def execute_algorithm(self, type):
 
