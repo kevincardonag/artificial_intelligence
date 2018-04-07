@@ -21,6 +21,7 @@ class Node(object):
         self.cost = 0
         self.f = 0
         self.flower = False
+        self.princes = False
 
     def __str__(self):
         """
