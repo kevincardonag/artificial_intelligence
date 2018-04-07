@@ -12,6 +12,8 @@ from global_variables import tree_development
 from models.nodo import Node
 from utils.read_world import search_mario, build_tree_solution
 from avara import algorithm_avara
+from preferential_by_depth import preferential_by_depth
+from time import time as t
 
 
 class GameWindow():
@@ -36,7 +38,8 @@ class GameWindow():
         self.number_nodes = ""
         self.tex_depth = ""
         self.algorithm_executed = ""
-        self.rect_mouse = pygame.Rect(0,0,1,1)
+        self.text_execution_time = ""
+        self.rect_mouse = pygame.Rect(0, 0, 1, 1)
         self.node = Node()
 
         self.background_rect_two = pygame.Color(0, 0, 0)
@@ -71,7 +74,7 @@ class GameWindow():
         count = 0
         type = 0
         caught_flower = False
-        pos_caught_x, pos_caught_y = 0,0
+        pos_caught_x, pos_caught_y = 0, 0
 
         while True:
             self.rewrite()
@@ -146,38 +149,45 @@ class GameWindow():
 
                     if event.key == K_RIGHT:
                         type = 1
-                        build_tree, cost, self.number_nodes, self.tex_depth = self.execute_algorithm(type)
+                        build_tree, cost, self.number_nodes, self.tex_depth, execution_time = self.execute_algorithm(type)
                         self.tex_cost = self.node.cost
-
                         self.algorithm_executed = ".:: POR AMPLITUD ::."
+                        self.text_execution_time = execution_time
 
                     if event.key == K_c:
                         type = 2
-                        build_tree, cost,self.number_nodes, self.tex_depth = self.execute_algorithm(type)
+                        build_tree, cost,self.number_nodes, self.tex_depth, execution_time = self.execute_algorithm(type)
                         self.tex_cost = self.node.cost
                         self.algorithm_executed = ".:: COSTO UNIFORME ::."
+                        self.text_execution_time = execution_time
 
                     if event.key == K_LEFT:
-                        type = 2
-                        build_tree, cost, self.number_nodes, self.tex_depth = self.execute_algorithm(type)
+                        type = 3
+                        build_tree, cost, self.number_nodes, self.tex_depth ,execution_time = self.execute_algorithm(type)
                         self.tex_cost = self.node.cost
-                        self.algorithm_executed = ".:: AQUI PROFUNDIDAD::."
+                        self.tex_depth = self.node.depth
+                        self.algorithm_executed = ".:: PROFUNDIDAD EVITANDO CICLOS ::."
+                        self.text_execution_time = execution_time
 
                     if event.key == K_UP:
                         type = 4
-                        build_tree, cost, self.number_nodes, self.tex_depth = self.execute_algorithm(type)
+                        build_tree, cost, self.number_nodes, self.tex_depth, execution_time = self.execute_algorithm(type)
                         self.tex_cost = self.node.cost
                         self.algorithm_executed = ".:: ALGORITMO AVARA ::."
+                        self.text_execution_time = execution_time
 
                     if event.key == K_DOWN:
                         type = 5
-                        build_tree, cost, self.number_nodes, self.tex_depth = self.execute_algorithm(type)
+                        build_tree, cost, self.number_nodes, self.tex_depth, execution_time = self.execute_algorithm(type)
+
                         self.tex_cost = self.node.cost
                         self.algorithm_executed = ".:: ALGORITMO A* ::.."
+                        self.text_execution_time = execution_time
 
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
+
 
     def execute_algorithm(self, type):
 
@@ -200,6 +210,9 @@ class GameWindow():
         self.node.world = self.world
         self.node.depth = 0
         expanded_nodes = 0
+
+        # calcular tiempo de ejecución:
+        start_time = t()
 
         # algoritmo preferente por amplitud
         if type == 1:
@@ -234,6 +247,20 @@ class GameWindow():
                     build_tree, cost, depth = build_tree_solution(node_move)
                     break
 
+        # algoritmo preferente por profundidad evitando ciclos
+        if type == 3:
+            tree_development.append(self.node)
+
+            expanded_nodes = 0
+            while True:
+                goal, node_move = preferential_by_depth(self.world, self.node)
+                expanded_nodes += 1
+                if not goal:
+                    self.node = node_move
+                else:
+                    build_tree, cost, depth = build_tree_solution(node_move)
+                    break
+
         # algoritmo avara
         if type == 4:
 
@@ -262,8 +289,10 @@ class GameWindow():
                     self.node = node_move
                     build_tree, cost, depth = build_tree_solution(node_move)
                     break
+        elapsed_time = t() - start_time
+        time = round(elapsed_time, 5)
 
-        return build_tree, cost, expanded_nodes, depth
+        return build_tree, cost, expanded_nodes, depth , str(time)
 
     def create_text(self, text, a, b, c):
         """
@@ -297,19 +326,21 @@ class GameWindow():
         # muestra la palabra Algorimos en la parte derecha de la pantalla
         self.window.blit(self.texto, ((len(read_file()) * 50) + 25, 20))
 
-        self.window.blit(self.menu,((len(read_file()) * 50)+5, 50))
+        self.window.blit(self.menu, ((len(read_file()) * 50)+5, 50))
 
         # Crea los textos que se van a mostrar en la pantalla
-        cost = self.create_text("COSTO: " + str(self.tex_cost), 255, 255, 255)
-        num_nodes = self.create_text("NODOS EXPANDIDOS: " + str(self.number_nodes), 255, 255, 255)
+        cost = self.create_text("COSTO:  " + str(self.tex_cost), 255, 255, 255)
+        num_nodes = self.create_text("NODOS EXPANDIDOS:  " + str(self.number_nodes), 255, 255, 255)
         depth = self.create_text("PROFUNDIDAD DEL ARBOL: " + str(self.tex_depth), 255, 255, 255)
         algorithm_executed = self.create_text(self.algorithm_executed, 255, 255, 255)
+        execution_time = self.create_text("TIEMPO EJECUCIÓN: " + self.text_execution_time, 255, 255, 255)
 
         # pinta los textos la ventana window
-        self.window.blit(algorithm_executed, ((len(read_file()) * 50) + 15, HIGH - 215))
-        self.window.blit(cost, ((len(read_file()) * 50) + 10, HIGH - 185))
-        self.window.blit(num_nodes, ((len(read_file()) * 50) + 10, HIGH - 170))
-        self.window.blit(depth, ((len(read_file()) * 50) + 10, HIGH - 155))
+        self.window.blit(algorithm_executed, ((len(read_file()) * 50) + 15, HIGH - 210))
+        self.window.blit(cost, ((len(read_file()) * 50) + 14, HIGH - 185))
+        self.window.blit(num_nodes, ((len(read_file()) * 50) + 14, HIGH - 165))
+        self.window.blit(depth, ((len(read_file()) * 50) + 14, HIGH - 145))
+        self.window.blit(execution_time, ((len(read_file()) * 50) + 14, HIGH - 125))
 
         self.rect_mouse.left, self.rect_mouse.top = pygame.mouse.get_pos()
         pygame.draw.rect(self.window, (0, 0, 0), self.rect_mouse)

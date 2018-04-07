@@ -118,13 +118,11 @@ def build_tree_solution(node):
 
     node_solution = node
     build_tree.insert(0, node_solution)
-    list_depth = []
 
     while True:
         if node_solution.node:
             node_solution = node_solution.node
             build_tree.insert(0, node_solution)
-            # print("["+str(node_solution.position_x)+","+str(node_solution.position_y)+"]")
         else:
             break
 
