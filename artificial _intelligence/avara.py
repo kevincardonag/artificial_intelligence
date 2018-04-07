@@ -34,7 +34,7 @@ def algorithm_avara(world, node):
         x, y = father_node.move_up(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
-
+        son_node.depth = father_node.depth + 1
         # se agrega el valor de la heuristica al Nodo
         heuristic = calculate_heuristic(son_node)
 
@@ -63,6 +63,7 @@ def algorithm_avara(world, node):
         x, y = father_node.move_right(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
+        son_node.depth = father_node.depth + 1
 
         # se agrega el valor de la heuristica al Nodo
         heuristic = calculate_heuristic(son_node)
@@ -91,6 +92,7 @@ def algorithm_avara(world, node):
         x, y = father_node.move_left(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
+        son_node.depth = father_node.depth + 1
 
         # se agrega el valor de la heuristica al Nodo
         heuristic = calculate_heuristic(son_node)
@@ -120,6 +122,7 @@ def algorithm_avara(world, node):
         x, y = father_node.move_down(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
+        son_node.depth = father_node.depth + 1
 
         # se agrega el valor de la heuristica al Nodo
         heuristic = calculate_heuristic(son_node)
@@ -143,7 +146,6 @@ def algorithm_avara(world, node):
     index = tree_development.index(next_node)
     del tree_development[index]
 
-    next_node.depth = father_node.depth + 1
     return is_goal, next_node
 
 

@@ -57,6 +57,7 @@ class GameWindow():
         self.mario_and_princes = pygame.image.load("images/mario_and_princes.png")
         self.block_white = pygame.image.load("images/bloque_blanco.png")
         self.flower = pygame.image.load("images/flower.png")
+        self.menu = pygame.image.load("images/menu2.png")
 
         self.world = read_file()
         self.run()
@@ -108,10 +109,17 @@ class GameWindow():
 
                     node = build_tree[count]
                     if not node.flower:
-                        self.window.blit(
-                            self.mario,
-                            (node.position_y * 50, node.position_x * 50)
-                        )
+                        if self.world[node.position_x][node.position_y] == '4':
+                            self.window.blit(
+                                self.mario_and_tortle,
+                                (node.position_y * 50, node.position_x * 50)
+                            )
+                        else:
+                            self.window.blit(
+                                self.mario,
+                                (node.position_y * 50, node.position_x * 50)
+                            )
+
                     else:
                         self.window.blit(
                             self.mario_flower,
@@ -138,37 +146,33 @@ class GameWindow():
 
                     if event.key == K_RIGHT:
                         type = 1
-                        build_tree, cost, self.number_nodes = self.execute_algorithm(type)
+                        build_tree, cost, self.number_nodes, self.tex_depth = self.execute_algorithm(type)
                         self.tex_cost = self.node.cost
-                        self.tex_depth = self.node.depth
+
                         self.algorithm_executed = ".:: POR AMPLITUD ::."
 
                     if event.key == K_c:
                         type = 2
-                        build_tree, cost, self.number_nodes = self.execute_algorithm(type)
+                        build_tree, cost,self.number_nodes, self.tex_depth = self.execute_algorithm(type)
                         self.tex_cost = self.node.cost
-                        self.tex_depth = self.node.depth
-                        self.algorithm_executed = ".:: COSTO UNIFORME ::."
-
-                    if event.key == K_UP:
-                        type = 2
-                        build_tree, cost, self.number_nodes = self.execute_algorithm(type)
-                        self.tex_cost = self.node.cost
-                        self.tex_depth = self.node.depth
                         self.algorithm_executed = ".:: COSTO UNIFORME ::."
 
                     if event.key == K_LEFT:
-                        type = 4
-                        build_tree, cost, self.number_nodes = self.execute_algorithm(type)
+                        type = 2
+                        build_tree, cost, self.number_nodes, self.tex_depth = self.execute_algorithm(type)
                         self.tex_cost = self.node.cost
-                        self.tex_depth = self.node.depth
+                        self.algorithm_executed = ".:: AQUI PROFUNDIDAD::."
+
+                    if event.key == K_UP:
+                        type = 4
+                        build_tree, cost, self.number_nodes, self.tex_depth = self.execute_algorithm(type)
+                        self.tex_cost = self.node.cost
                         self.algorithm_executed = ".:: ALGORITMO AVARA ::."
 
                     if event.key == K_DOWN:
                         type = 5
-                        build_tree, cost, self.number_nodes = self.execute_algorithm(type)
+                        build_tree, cost, self.number_nodes, self.tex_depth = self.execute_algorithm(type)
                         self.tex_cost = self.node.cost
-                        self.tex_depth = self.node.depth
                         self.algorithm_executed = ".:: ALGORITMO A* ::.."
 
                 if event.type == QUIT:
@@ -211,7 +215,7 @@ class GameWindow():
                 else:
 
                     self.node = node_move
-                    build_tree, cost = build_tree_solution(node_move)
+                    build_tree, cost, depth = build_tree_solution(node_move)
                     break
 
         # algoritmo por costo uniforme
@@ -227,7 +231,7 @@ class GameWindow():
                 else:
 
                     self.node = node_move
-                    build_tree, cost = build_tree_solution(node_move)
+                    build_tree, cost, depth = build_tree_solution(node_move)
                     break
 
         # algoritmo avara
@@ -241,7 +245,7 @@ class GameWindow():
                     self.node = node_move
                 else:
                     self.node = node_move
-                    build_tree, cost = build_tree_solution(node_move)
+                    build_tree, cost, depth = build_tree_solution(node_move)
                     break
 
         # algoritmo A*
@@ -256,10 +260,10 @@ class GameWindow():
                 else:
 
                     self.node = node_move
-                    build_tree, cost = build_tree_solution(node_move)
+                    build_tree, cost, depth = build_tree_solution(node_move)
                     break
 
-        return build_tree, cost, expanded_nodes
+        return build_tree, cost, expanded_nodes, depth
 
     def create_text(self, text, a, b, c):
         """
@@ -291,7 +295,9 @@ class GameWindow():
                          ((len(read_file()) * 50) + 10, HIGH - 215, WIDTH - len(read_file()) * 50 - 10, 200))
 
         # muestra la palabra Algorimos en la parte derecha de la pantalla
-        self.window.blit(self.texto, ((len(read_file()) * 50) + 20, 20))
+        self.window.blit(self.texto, ((len(read_file()) * 50) + 25, 20))
+
+        self.window.blit(self.menu,((len(read_file()) * 50)+5, 50))
 
         # Crea los textos que se van a mostrar en la pantalla
         cost = self.create_text("COSTO: " + str(self.tex_cost), 255, 255, 255)

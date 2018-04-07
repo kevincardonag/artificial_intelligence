@@ -32,6 +32,7 @@ def uniform_cost(world, node):
         son_node.position_x = x
         son_node.position_y = y
 
+        son_node.depth = father_node.depth + 1
         # pregunta si el nodo que se expandio ya fue expandido
 
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
@@ -59,6 +60,7 @@ def uniform_cost(world, node):
         x, y = father_node.move_up(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
+        son_node.depth = father_node.depth + 1
 
         # pregunta si el nodo que se expandio ya fue expandido
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
@@ -86,6 +88,7 @@ def uniform_cost(world, node):
         x, y = father_node.move_right(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
+        son_node.depth = father_node.depth + 1
 
         # pregunta si el nodo que se expandio ya fue expandido
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
@@ -113,7 +116,7 @@ def uniform_cost(world, node):
         x, y = father_node.move_left(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
-
+        son_node.depth = father_node.depth + 1
         # pregunta si el nodo que se expandio ya fue expandido
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
 
@@ -133,7 +136,7 @@ def uniform_cost(world, node):
     tree_development.sort(key=lambda node: node.cost)
     del tree_development[0]
     next_node = tree_development[0]
-    next_node.depth = father_node.depth + 1
+    # next_node.depth = father_node.depth + 1
 
     return is_goal, next_node
 

@@ -118,6 +118,7 @@ def build_tree_solution(node):
 
     node_solution = node
     build_tree.insert(0, node_solution)
+    list_depth = []
 
     while True:
         if node_solution.node:
@@ -127,4 +128,7 @@ def build_tree_solution(node):
         else:
             break
 
-    return build_tree, node.cost,
+    list_depth = sorted(build_tree, key=lambda node: node.depth, reverse=True)
+    d = list_depth[0].depth
+
+    return build_tree, node.cost, d
