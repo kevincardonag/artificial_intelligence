@@ -33,6 +33,7 @@ def a_star(world, node):
         son_node.position_x = x
         son_node.position_y = y
         son_node.heuristic = calculate_heuristic(son_node)
+        son_node.depth = father_node.depth + 1
 
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
 
@@ -63,6 +64,7 @@ def a_star(world, node):
         son_node.position_x = x
         son_node.position_y = y
         son_node.heuristic = calculate_heuristic(son_node)
+        son_node.depth = father_node.depth + 1
 
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
 
@@ -91,8 +93,9 @@ def a_star(world, node):
         x, y = father_node.move_right(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
-
+        son_node.depth = father_node.depth + 1
         son_node.heuristic = calculate_heuristic(son_node)
+
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
 
             # si el nodo esta parado es una flor.
@@ -120,7 +123,7 @@ def a_star(world, node):
         x, y = father_node.move_left(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
-
+        son_node.depth = father_node.depth + 1
         son_node.heuristic = calculate_heuristic(son_node)
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
 
@@ -141,6 +144,5 @@ def a_star(world, node):
     tree_development.sort(key=lambda node: node.f)
     del tree_development[0]
     next_node = tree_development[0]
-    next_node.depth = father_node.depth + 1
 
     return is_goal, world, next_node

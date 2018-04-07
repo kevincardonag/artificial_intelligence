@@ -33,6 +33,8 @@ def preferential_by_depth(world, node):
         son_node.position_x = x
         son_node.position_y = y
 
+        son_node.depth = father_node.depth + 1
+
         # evitar devolverse
         to_be_return = next_position_is_to_be_return(son_node)
         if not to_be_return:
@@ -64,6 +66,7 @@ def preferential_by_depth(world, node):
         x, y = father_node.move_right(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
+        son_node.depth = father_node.depth + 1
 
         # evitar devolverse
         to_be_return = next_position_is_to_be_return(son_node)
@@ -96,6 +99,7 @@ def preferential_by_depth(world, node):
         x, y = father_node.move_left(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
+        son_node.depth = father_node.depth + 1
 
         # evitar devolverse
         to_be_return = next_position_is_to_be_return(son_node)
@@ -128,7 +132,7 @@ def preferential_by_depth(world, node):
         x, y = father_node.move_down(position_x=father_node.position_x, position_y=father_node.position_y)
         son_node.position_x = x
         son_node.position_y = y
-
+        son_node.depth = father_node.depth + 1
         # evitar devolverse
         to_be_return = next_position_is_to_be_return(son_node)
         if not to_be_return:
@@ -154,7 +158,6 @@ def preferential_by_depth(world, node):
     del tree_development[index_father_node]
 
     next_node = tree_development[0]
-    next_node.depth = father_node.depth + 1
     return is_goal, next_node
 
 

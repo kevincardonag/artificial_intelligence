@@ -123,8 +123,10 @@ def build_tree_solution(node):
         if node_solution.node:
             node_solution = node_solution.node
             build_tree.insert(0, node_solution)
-            # print("["+str(node_solution.position_x)+","+str(node_solution.position_y)+"]")
         else:
             break
 
-    return build_tree, node.cost,
+    list_depth = sorted(build_tree, key=lambda node: node.depth, reverse=True)
+    d = list_depth[0].depth
+
+    return build_tree, node.cost, d
