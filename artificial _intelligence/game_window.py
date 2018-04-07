@@ -11,6 +11,7 @@ from global_variables import tree_development
 from models.nodo import Node
 from utils.read_world import search_mario, build_tree_solution
 from avara import algorithm_avara
+from preferential_by_depth import preferential_by_depth
 
 
 class GameWindow():
@@ -90,6 +91,20 @@ class GameWindow():
 
             while True:
                 goal, node_move = uniform_cost(self.world, self.node)
+                if not goal:
+                    self.node = node_move
+                else:
+                    build_tree, cost = build_tree_solution(node_move)
+                    break
+
+        # algoritmo preferente por profundidad evitando ciclos
+        if ALGORITHM_TYPE == 3:
+            tree_development.append(self.node)
+
+            expanded_nodes = 0
+            while True:
+                goal, node_move = preferential_by_depth(self.world, self.node)
+                expanded_nodes += 1
                 if not goal:
                     self.node = node_move
                 else:
