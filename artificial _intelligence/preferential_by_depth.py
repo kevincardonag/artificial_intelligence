@@ -154,7 +154,6 @@ def preferential_by_depth(world, node):
     del tree_development[index_father_node]
 
     next_node = tree_development[0]
-    print(next_node)
     next_node.depth = father_node.depth + 1
     return is_goal, next_node
 
