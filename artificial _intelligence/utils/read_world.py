@@ -16,7 +16,7 @@ def read_matriz(world, node):
     # preguntar arriba
     if (position_mario_x - 1) < 0:
 
-        block_up = {'move': False, 'cost': 0}
+        block_up = {'move': False, 'cost': 0, 'flower':False}
 
     else:
         block_up = world[position_mario_x - 1][position_mario_y].strip()
