@@ -17,7 +17,6 @@ def preferential_by_depth(world, node):
         return is_goal, node
 
     possible_movements = read_matriz(world, node)
-
     father_node.possible_movements = possible_movements
 
     if possible_movements.get('block_up').get('move'):
@@ -133,6 +132,7 @@ def preferential_by_depth(world, node):
         son_node.position_x = x
         son_node.position_y = y
         son_node.depth = father_node.depth + 1
+
         # evitar devolverse
         to_be_return = next_position_is_to_be_return(son_node)
         if not to_be_return:
@@ -179,7 +179,6 @@ def search_node_in_tree(node):
                 node = node.node
         except AttributeError:
             break
-
     return found
 
 

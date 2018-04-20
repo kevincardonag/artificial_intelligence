@@ -8,7 +8,9 @@ def read_file():
     """
     world = []
 
-    with open('matriz2.txt') as matriz:
+
+    with open('worlds/matriz.txt') as matriz:
+
         """ Crea la matriz con base a los datos del archivo txt """
         [world.append(line_matriz.strip().split(" ")) for line_matriz in matriz]
 

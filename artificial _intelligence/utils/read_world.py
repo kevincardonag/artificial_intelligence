@@ -92,6 +92,18 @@ def search_mario(world):
             if world[position_x][position_y] == '2':
                 return position_x, position_y
 
+def search_princess(world):
+    """
+    Autor: Kevin Cardona
+    Fecha: marzo 17 2018
+    Método que encuentra la posición del mario
+    :param world: matriz que representa el mundo
+    :return:
+    """
+    for position_x in range(len(world)):
+        for position_y in range(len(world)):
+            if world[position_x][position_y] == '5':
+                return position_x, position_y
 
 def check_goal(world, node):
     """

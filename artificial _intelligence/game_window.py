@@ -252,6 +252,7 @@ class GameWindow():
             tree_development.append(self.node)
 
             expanded_nodes = 0
+            c = 0
             while True:
                 goal, node_move = preferential_by_depth(self.world, self.node)
                 expanded_nodes += 1
@@ -260,6 +261,9 @@ class GameWindow():
                 else:
                     build_tree, cost, depth = build_tree_solution(node_move)
                     break
+                if c == 5:
+                    break
+
 
         # algoritmo avara
         if type == 4:
