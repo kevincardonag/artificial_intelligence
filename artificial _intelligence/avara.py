@@ -1,4 +1,5 @@
-from utils.read_world import check_goal, read_matriz
+from utils.read_world import check_goal, read_matriz, search_princess
+from utils.read_file import read_file
 #import numpy as np
 from models.nodo import Node
 from global_variables import tree_development, build_tree, nodes_visited
@@ -156,8 +157,10 @@ def calculate_heuristic(son_node):
     :param son_node: Instancia de la clase nodo
     :return: integer
     """
-    position_x = son_node.position_x - 4
-    position_y = son_node.position_y - 9
+    world = read_file()
+    position_x_princess, position_y_princess = search_princess(world)
+    position_x = son_node.position_x - position_x_princess
+    position_y = son_node.position_y - position_y_princess
     heuristic = abs(position_x + position_y)
     # heuristic = np.linalg.norm(difference)
 
