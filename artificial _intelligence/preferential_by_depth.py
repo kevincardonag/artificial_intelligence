@@ -1,7 +1,7 @@
 from models.nodo import Node
 from global_variables import tree_development, build_tree
 from utils.read_world import read_matriz, check_goal
-from global_variables import tree_development, build_tree
+from global_variables import tree_development, build_tree, nodes_visited
 
 
 def preferential_by_depth(world, node):
@@ -19,6 +19,8 @@ def preferential_by_depth(world, node):
     possible_movements = read_matriz(world, node)
     father_node.possible_movements = possible_movements
 
+    nodes_visited.append(father_node)
+
     if possible_movements.get('block_up').get('move'):
 
         # se crea el nodo hijo
@@ -34,24 +36,21 @@ def preferential_by_depth(world, node):
 
         son_node.depth = father_node.depth + 1
 
-        # evitar devolverse
-        to_be_return = next_position_is_to_be_return(son_node)
-        if not to_be_return:
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_up').get('flower'):
+            son_node.flower = True
 
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_up').get('cost')
+
+        # evitar devolverse
+        if not son_node.in_list(nodes_visited):
             # evitar el ciclo
             node_found = search_node_in_tree(son_node)
             if not node_found:
-
-                # si el nodo esta parado es una flor.
-                if possible_movements.get('block_up').get('flower'):
-                    son_node.flower = True
-
-                if father_node.flower:
-                    son_node.flower = True
-                    son_node.cost = father_node.cost + 1
-                else:
-                    son_node.cost = father_node.cost + possible_movements.get('block_up').get('cost')
-
                 tree_development.insert(0, son_node)
 
     if possible_movements.get('block_right').get('move'):
@@ -67,24 +66,21 @@ def preferential_by_depth(world, node):
         son_node.position_y = y
         son_node.depth = father_node.depth + 1
 
-        # evitar devolverse
-        to_be_return = next_position_is_to_be_return(son_node)
-        if not to_be_return:
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_right').get('flower'):
+            son_node.flower = True
 
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
+
+        # evitar devolverse
+        if not son_node.in_list(nodes_visited):
             # evitar el ciclo
             node_found = search_node_in_tree(son_node)
             if not node_found:
-
-                # si el nodo esta parado es una flor.
-                if possible_movements.get('block_right').get('flower'):
-                    son_node.flower = True
-
-                if father_node.flower:
-                    son_node.flower = True
-                    son_node.cost = father_node.cost + 1
-                else:
-                    son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
-
                 tree_development.insert(0, son_node)
 
     if possible_movements.get('block_left').get('move'):
@@ -99,25 +95,22 @@ def preferential_by_depth(world, node):
         son_node.position_x = x
         son_node.position_y = y
         son_node.depth = father_node.depth + 1
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_left').get('flower'):
+            son_node.flower = True
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
 
         # evitar devolverse
-        to_be_return = next_position_is_to_be_return(son_node)
-        if not to_be_return:
+        if not son_node.in_list(nodes_visited):
 
             # evitar el ciclo
             node_found = search_node_in_tree(son_node)
             if not node_found:
-
-                # si el nodo esta parado es una flor.
-                if possible_movements.get('block_left').get('flower'):
-                    son_node.flower = True
-
-                if father_node.flower:
-                    son_node.flower = True
-                    son_node.cost = father_node.cost + 1
-                else:
-                    son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
-
                 tree_development.insert(0, son_node)
 
     if possible_movements.get('block_down').get('move'):
@@ -133,24 +126,22 @@ def preferential_by_depth(world, node):
         son_node.position_y = y
         son_node.depth = father_node.depth + 1
 
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_down').get('flower'):
+            son_node.flower = True
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
+
         # evitar devolverse
-        to_be_return = next_position_is_to_be_return(son_node)
-        if not to_be_return:
+        if not son_node.in_list(nodes_visited):
 
             # evitar el ciclo
             node_found = search_node_in_tree(son_node)
             if not node_found:
-
-                # si el nodo esta parado es una flor.
-                if possible_movements.get('block_down').get('flower'):
-                    son_node.flower = True
-
-                if father_node.flower:
-                    son_node.flower = True
-                    son_node.cost = father_node.cost + 1
-                else:
-                    son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
-
                 tree_development.insert(0, son_node)
 
     # elimine el nodo padre del array
