@@ -35,21 +35,21 @@ def a_star(world, node):
         son_node.heuristic = calculate_heuristic(son_node)
         son_node.depth = father_node.depth + 1
 
-        if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_down').get('flower'):
+            son_node.flower = True
+            nodes_visited.clear()
 
-            # si el nodo esta parado es una flor.
-            if possible_movements.get('block_down').get('flower'):
-                son_node.flower = True
-
-            if father_node.flower:
-                son_node.flower = True
-                son_node.cost = father_node.cost + 1
-                son_node.f = son_node.cost + son_node.heuristic
-            else:
-                son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
-
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
             son_node.f = son_node.cost + son_node.heuristic
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
 
+        son_node.f = son_node.cost + son_node.heuristic
+
+        if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
             tree_development.append(son_node)
 
     if possible_movements.get('block_up').get('move'):
@@ -66,20 +66,20 @@ def a_star(world, node):
         son_node.heuristic = calculate_heuristic(son_node)
         son_node.depth = father_node.depth + 1
 
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_up').get('flower'):
+            son_node.flower = True
+            nodes_visited.clear()
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_up').get('cost')
+
+        son_node.f = son_node.heuristic + son_node.cost
+
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
-
-            # si el nodo esta parado es una flor.
-            if possible_movements.get('block_up').get('flower'):
-                son_node.flower = True
-
-            if father_node.flower:
-                son_node.flower = True
-                son_node.cost = father_node.cost + 1
-            else:
-                son_node.cost = father_node.cost + possible_movements.get('block_up').get('cost')
-
-            son_node.f = son_node.heuristic + son_node.cost
-
             tree_development.append(son_node)
 
     if possible_movements.get('block_right').get('move'):
@@ -96,20 +96,20 @@ def a_star(world, node):
         son_node.depth = father_node.depth + 1
         son_node.heuristic = calculate_heuristic(son_node)
 
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_right').get('flower'):
+            son_node.flower = True
+            nodes_visited.clear()
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
+
+        son_node.f = son_node.heuristic + son_node.cost
+
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
-
-            # si el nodo esta parado es una flor.
-            if possible_movements.get('block_right').get('flower'):
-                son_node.flower = True
-
-            if father_node.flower:
-                son_node.flower = True
-                son_node.cost = father_node.cost + 1
-            else:
-                son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
-
-            son_node.f = son_node.heuristic + son_node.cost
-
             tree_development.append(son_node)
 
     if possible_movements.get('block_left').get('move'):
@@ -125,19 +125,21 @@ def a_star(world, node):
         son_node.position_y = y
         son_node.depth = father_node.depth + 1
         son_node.heuristic = calculate_heuristic(son_node)
+
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_left').get('flower'):
+            son_node.flower = True
+            nodes_visited.clear()
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
+
+        son_node.f = son_node.heuristic + son_node.cost
+
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
-
-            # si el nodo esta parado es una flor.
-            if possible_movements.get('block_left').get('flower'):
-                son_node.flower = True
-
-            if father_node.flower:
-                son_node.flower = True
-                son_node.cost = father_node.cost + 1
-            else:
-                son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
-
-            son_node.f = son_node.heuristic + son_node.cost
             tree_development.append(son_node)
 
     # ordena la lista de los nodos meta por el menor f y elimina el nodo que se va a expandir

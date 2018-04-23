@@ -59,18 +59,18 @@ def preferential_by_amplitude(world, node):
         son_node.position_x = x
         son_node.position_y = y
         son_node.depth = father_node.depth + 1
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_right').get('flower'):
+            son_node.flower = True
+            nodes_visited.clear()
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
 
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
-            # si el nodo esta parado es una flor.
-            if possible_movements.get('block_right').get('flower'):
-                son_node.flower = True
-
-            if father_node.flower:
-                son_node.flower = True
-                son_node.cost = father_node.cost + 1
-            else:
-                son_node.cost = father_node.cost + possible_movements.get('block_right').get('cost')
-
             tree_development.append(son_node)
 
     if possible_movements.get('block_left').get('move'):
@@ -86,17 +86,18 @@ def preferential_by_amplitude(world, node):
         son_node.position_y = y
         son_node.depth = father_node.depth + 1
 
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_left').get('flower'):
+            son_node.flower = True
+            nodes_visited.clear()
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
+
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
-            # si el nodo esta parado es una flor.
-            if possible_movements.get('block_left').get('flower'):
-                son_node.flower = True
-
-            if father_node.flower:
-                son_node.flower = True
-                son_node.cost = father_node.cost + 1
-            else:
-                son_node.cost = father_node.cost + possible_movements.get('block_left').get('cost')
-
             tree_development.append(son_node)
 
     if possible_movements.get('block_down').get('move'):
@@ -112,17 +113,18 @@ def preferential_by_amplitude(world, node):
         son_node.position_y = y
         son_node.depth = father_node.depth + 1
 
+        # si el nodo esta parado es una flor.
+        if possible_movements.get('block_down').get('flower'):
+            son_node.flower = True
+            nodes_visited.clear()
+
+        if father_node.flower:
+            son_node.flower = True
+            son_node.cost = father_node.cost + 1
+        else:
+            son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
+
         if not son_node.in_list(nodes_visited) and not son_node.in_list(tree_development):
-            # si el nodo esta parado es una flor.
-            if possible_movements.get('block_down').get('flower'):
-                son_node.flower = True
-
-            if father_node.flower:
-                son_node.flower = True
-                son_node.cost = father_node.cost + 1
-            else:
-                son_node.cost = father_node.cost + possible_movements.get('block_down').get('cost')
-
             tree_development.append(son_node)
 
     # elimine el primer nodo del array

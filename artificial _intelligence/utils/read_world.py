@@ -42,7 +42,7 @@ def read_matriz(world, node):
 
         block_down = get_field(field=block_down)
     except Exception:
-        block_down = {'move':False,'cost':0, 'flower':False}
+        block_down = {'move': False, 'cost':0, 'flower':False}
 
     possible_movements = {
         'block_up': block_up,
@@ -63,7 +63,6 @@ def get_field(field):
     :return: bool
     """
     if field == '1':
-
         field = {'move': False, 'cost': 0, 'flower': False}
     elif field == '0':
         field = {'move': True, 'cost': 1, 'flower': False}

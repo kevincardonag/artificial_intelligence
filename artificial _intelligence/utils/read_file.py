@@ -7,8 +7,6 @@ def read_file():
     :return:
     """
     world = []
-
-
     with open('worlds/matriz.txt') as matriz:
 
         """ Crea la matriz con base a los datos del archivo txt """

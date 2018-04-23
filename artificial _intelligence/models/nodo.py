@@ -43,7 +43,7 @@ class Node(object):
         if other is None:
             return False
 
-        if self.position_x == other.position_x and self.position_y == other.position_y:
+        if self.position_x == other.position_x and self.position_y == other.position_y and self.flower == other.flower:
             return True
         else:
             return False

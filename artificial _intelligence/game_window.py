@@ -73,6 +73,7 @@ class GameWindow():
         """
         count = 0
         type = 0
+        c=0
         caught_flower = False
         pos_caught_x, pos_caught_y = 0, 0
 
@@ -111,6 +112,9 @@ class GameWindow():
                 if count < len(build_tree):
 
                     node = build_tree[count]
+                    if node.move_right(node.position_x,node.position_y):
+                        c+=1
+
                     if not node.flower:
                         if self.world[node.position_x][node.position_y] == '4':
                             self.window.blit(
@@ -139,6 +143,7 @@ class GameWindow():
                 else:
                     type = 0
                     count = 0
+                    print("se movio a a derecha: "+str(c))
                     if caught_flower:
                         self.world[pos_caught_x][pos_caught_y] = '3'
                     caught_flower = False
@@ -264,7 +269,6 @@ class GameWindow():
                 if c == 5:
                     break
 
-
         # algoritmo avara
         if type == 4:
 
@@ -295,6 +299,9 @@ class GameWindow():
                     break
         elapsed_time = t() - start_time
         time = round(elapsed_time, 5)
+
+        nodo = build_tree[-1]
+        self.papa_es_tortuga(nodo)
 
         return build_tree, cost, expanded_nodes, depth , str(time)
 
@@ -349,5 +356,15 @@ class GameWindow():
         self.rect_mouse.left, self.rect_mouse.top = pygame.mouse.get_pos()
         pygame.draw.rect(self.window, (0, 0, 0), self.rect_mouse)
 
+    def papa_es_tortuga(self, node):
+        position_x = node.node.position_x
+        position_y = node.node.position_y
+
+        p = self.world[position_x][position_y]
+
+        if p == '4':
+            print("si es tortuga")
+        else:
+            print("No es tortuga")
 
 game_window = GameWindow()
