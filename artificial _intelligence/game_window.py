@@ -231,7 +231,6 @@ class GameWindow():
                 if not goal:
                     self.node = node_move
                 else:
-
                     self.node = node_move
                     build_tree, cost, depth = build_tree_solution(node_move)
                     break
